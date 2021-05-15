@@ -1,6 +1,6 @@
-import {MigrationInterface, QueryRunner, Table} from 'typeorm';
+import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class ExchangesTable1620940209158 implements MigrationInterface {
+export class ExchangesTable1621106884885 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
@@ -17,11 +17,11 @@ export class ExchangesTable1620940209158 implements MigrationInterface {
                         type: 'varchar',
                     },
                     {
-                        name: 'from_currency',
+                        name: 'from_currency_id',
                         type: 'varchar',
                     },
                     {
-                        name: 'to_currency',
+                        name: 'to_currency_id',
                         type: 'varchar',
                     },
                     {
@@ -47,7 +47,25 @@ export class ExchangesTable1620940209158 implements MigrationInterface {
                         type: 'timestamp',
                         default: 'now()'
                     },
-                ]
+                ],
+                foreignKeys: [
+                    {
+                      name: 'FK_from_currency_id',
+                      referencedTableName: 'currencies',
+                      referencedColumnNames: ['id'],
+                      columnNames: ['from_currency_id'],
+                      onUpdate: 'CASCADE',
+                      onDelete: 'CASCADE'
+                    },
+                    {
+                        name: 'FK_to_currency_id',
+                        referencedTableName: 'currencies',
+                        referencedColumnNames: ['id'],
+                        columnNames: ['to_currency_id'],
+                        onUpdate: 'CASCADE',
+                        onDelete: 'CASCADE'
+                      },
+                  ]
             })
         )
     }

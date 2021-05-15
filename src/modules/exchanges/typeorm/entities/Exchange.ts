@@ -3,8 +3,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryColumn,
 } from 'typeorm';
+import { Currency } from '../../../currencies/typeorm/entities/Currency';
 
 @Entity('exchanges')
 export class Exchange {
@@ -17,8 +20,18 @@ export class Exchange {
   @Column()
   from_currency: string;
 
+  @ManyToOne(() => Currency, currency => currency.id, {
+    cascade: true
+  })
+  @JoinColumn({ name: 'from_currency' })
+
   @Column()
   to_currency: string;
+
+  @ManyToOne(() => Currency, currency => currency.id, {
+    cascade: true
+  })
+  @JoinColumn({ name: 'to_currency' })
 
   @Column('decimal', { precision: 5, scale: 2 })
   original_amount: number;
