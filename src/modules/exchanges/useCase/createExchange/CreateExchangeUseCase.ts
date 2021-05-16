@@ -1,12 +1,14 @@
 import { inject, injectable } from "tsyringe";
+import { AppError } from "../../../../shared/errors/AppErrors";
 
+import { ICurrenciesRepository } from "../../../currencies/repositories/ICurrenciesRepository";
 import { IExchangesRepository } from "../../repositories/IExchangesRepository";
 import { Exchange } from "../../typeorm/entities/Exchange";
 
 interface IRequest {
   username: string;
-  from_currency: string;
-  to_currency: string;
+  from_currency_id: string;
+  to_currency_id: string;
   original_amount: number;
 }
 
@@ -14,14 +16,45 @@ interface IRequest {
 class CreateExchangeUseCase {
   constructor(
     @inject("ExchangesRepository")
-    private exchangesRepository: IExchangesRepository
+    private exchangesRepository: IExchangesRepository,
+
+    @inject("CurrenciesRepository")
+    private currenciesRepository: ICurrenciesRepository
   ) {}
 
-  async execute(data: IRequest): Promise<Exchange> {
+  async execute({
+    username,
+    from_currency_id,
+    to_currency_id,
+    original_amount
+  }: IRequest): Promise<any> {
+    const from_currency = await this.currenciesRepository.findById(from_currency_id)
+    
+    if (!from_currency) {
+      throw new AppError("from_currency does not exists!")
+    }
+
+    const to_currency = await this.currenciesRepository.findById(to_currency_id)
+    
+    if (!to_currency) {
+      throw new AppError("to_currency does not exists!")
+    }
+
+    const original_amount_to_brl = original_amount / from_currency.rate
+    
+    const charged_fee = original_amount_to_brl * 0.1
+    const converted_amount_to_brl = original_amount_to_brl - charged_fee
+
+    const converted_amount = original_amount_to_brl * to_currency.rate
+
     const exchangeOperation = await this.exchangesRepository.create({
-      ...data,
-      converted_amount: 100,
-      charged_fee: 10,
+      username,
+      from_currency: from_currency.id,
+      to_currency: to_currency.id,
+      original_amount,
+      converted_amount_to_brl,
+      converted_amount,
+      charged_fee,
     });
 
     return exchangeOperation;

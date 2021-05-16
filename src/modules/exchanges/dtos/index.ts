@@ -3,6 +3,7 @@ export interface ICreateExchangeDTO {
   from_currency: string;
   to_currency: string;
   original_amount: number;
+  converted_amount_to_brl: number;
   converted_amount: number;
   charged_fee: number;
 }

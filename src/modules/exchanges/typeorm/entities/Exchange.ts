@@ -33,13 +33,16 @@ export class Exchange {
   })
   @JoinColumn({ name: 'to_currency' })
 
-  @Column('decimal', { precision: 5, scale: 2 })
+  @Column('decimal', { precision: 12, scale: 2 })
   original_amount: number;
 
-  @Column('decimal', { precision: 5, scale: 2 })
+  @Column('decimal', { precision: 12, scale: 2 })
+  converted_amount_to_brl: number;
+
+  @Column('decimal', { precision: 12, scale: 2 })
   converted_amount: number;
 
-  @Column('decimal', { precision: 5, scale: 2 })
+  @Column('decimal', { precision: 12, scale: 2 })
   charged_fee: number;
 
   @CreateDateColumn()

@@ -16,8 +16,8 @@ class CreateExchangeController {
 
     const exchange = await createExchange.execute({
       username,
-      from_currency,
-      to_currency,
+      from_currency_id: from_currency,
+      to_currency_id: to_currency,
       original_amount
     });
 
