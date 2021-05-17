@@ -14,7 +14,7 @@ class CreateCurrencyController {
     const createCurrency = container.resolve(CreateCurrencyUseCase);
 
     const currency = await createCurrency.execute({
-      id,
+      id: id.toUpperCase(),
       name,
       rate,
     });
