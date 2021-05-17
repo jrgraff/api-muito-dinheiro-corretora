@@ -1,11 +1,12 @@
 import 'reflect-metadata';
+import 'express-async-errors';
 
 import express from "express";
 
-import { AppError } from "./shared/errors/AppErrors";
 import { router } from "./shared/routes";
 import './database';
 import './shared/container'
+import { AppError } from './shared/errors/AppError';
 
 const app = express();
 
