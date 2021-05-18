@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 
 import { ExchangesProps } from "../../dtos";
 import { IExchangesRepository } from "../../repositories/IExchangesRepository";
-import { listExchangesMapper } from "./ListExchangesMapper";
+import { listExchangesMapper } from "./listExchangesMapper";
 
 interface IRequest {
   username: string;
