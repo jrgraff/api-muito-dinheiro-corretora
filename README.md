@@ -77,4 +77,4 @@ $ yarn dev
 <p>Após tudo configurado, com a sistema rodando, entre no link http://localhost:3333/api-docs/ para acessar a documentação do Swagger.</p>
 
 ---
-Made with 💜 &nbsp;by jackson Graff &nbsp;[See my linkedin](https://www.linkedin.com/in/jackson-graff-a032b119a/)
+Made with 💜 &nbsp;by Jackson Graff &nbsp;[See my linkedin](https://www.linkedin.com/in/jackson-graff-a032b119a/)
