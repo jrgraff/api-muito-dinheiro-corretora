@@ -19,7 +19,7 @@ export interface ExchangesProps {
     created_at: Date,
   }],
   totals: {
-    charged_fee_total: number,
-    exchange_total_to_brl: number,
+    charged_fee_total: string,
+    exchange_total_to_brl: string,
   }
 }

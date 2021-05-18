@@ -1,4 +1,4 @@
-import { ExchangesProps, ICreateExchangeDTO } from "../../dtos";
+import { ICreateExchangeDTO } from "../../dtos";
 import { Exchange } from "../../typeorm/entities/Exchange";
 import { IExchangesRepository } from "../IExchangesRepository";
 
@@ -29,5 +29,5 @@ export class InMemoryExchangesRepository implements IExchangesRepository {
     return exchange;
   }
 
-  getReport: (username: string, initial_date: string, end_date: string) => Promise<ExchangesProps>;
+  getReport: (username: string) => Promise<Exchange[]>;
 }

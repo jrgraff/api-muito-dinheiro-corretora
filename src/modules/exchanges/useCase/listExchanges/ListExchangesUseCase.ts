@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 
 import { ExchangesProps } from "../../dtos";
 import { IExchangesRepository } from "../../repositories/IExchangesRepository";
+import { listExchangesMapper } from "./ListExchangesMapper";
 
 interface IRequest {
   username: string;
@@ -17,13 +18,11 @@ class ListExchangesUseCase {
   ) {}
 
   async execute({ username, initial_date, end_date }: IRequest): Promise<ExchangesProps> {
-    const exchanges = await this.exchangesRepository.getReport(
-      username,
-      initial_date,
-      end_date
-    );
+    const exchanges = await this.exchangesRepository.getReport(username);
 
-    return exchanges;
+    const report = listExchangesMapper(initial_date, end_date, exchanges)
+
+    return report;
   }
 }
 
