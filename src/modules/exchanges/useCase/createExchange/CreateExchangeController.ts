@@ -9,7 +9,7 @@ class CreateExchangeController {
       username,
       from_currency,
       to_currency,
-      original_amount
+      amount
     } = request.body;
 
     const createExchange = container.resolve(CreateExchangeUseCase);
@@ -18,7 +18,7 @@ class CreateExchangeController {
       username,
       from_currency_id: from_currency.toUpperCase(),
       to_currency_id: to_currency.toUpperCase(),
-      original_amount
+      original_amount: amount
     });
 
     return response.status(201).json(exchange);

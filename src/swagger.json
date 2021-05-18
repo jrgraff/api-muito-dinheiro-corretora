@@ -1,0 +1,223 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Muito Dinheiro Documentação",
+    "description": "API para câmbio de moeda",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/currencies": {
+      "post": {
+        "tags": [
+          "Moedas"
+        ],
+        "summary": "Criar uma moeda de troca",
+        "description": "Permite a criação de uma nova moeda de troca ou atualização de uma já existente",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "rate": {
+                    "type": "number"
+                  }
+                },
+                "example": {
+                  "id": "EX",
+                  "name": "Exemplo de moeda",
+                  "rate": 100
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Moeda criada com sucesso"
+          },
+          "500": {
+            "description": "Erro do servidor"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Moedas"
+        ],
+        "summary": "Listar moedas",
+        "description": "Retorna uma lista json com todas as moedas de troca salvas no banco de dados",
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "rate": {
+                        "type": "number"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exchanges": {
+      "post": {
+        "tags": [
+          "Operações"
+        ],
+        "summary": "Criar uma operação de câmbio",
+        "description": "Permite a criação de uma nova operação de câmbio",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "from_currency": {
+                    "type": "string"
+                  },
+                  "to_currency": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "number"
+                  }
+                },
+                "example": {
+                  "username": "Teste",
+                  "from_currency": "BRL",
+                  "to_currency": "ARS",
+                  "amount": 1100
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operação efetuada com sucesso"
+          },
+          "400": {
+            "description": "Moeda de destino/origem inválida"
+          },
+          "500": {
+            "description": "Erro do servidor"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Relatórios"
+        ],
+        "summary": "Listar operações",
+        "description": "Retorna uma lista json com todas as operações salvas no banco de dados, essas podem ser filtradas por nome de usuário, data de início e data final",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "Filtrar operações por nome de usuário",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "initial_date",
+            "in": "query",
+            "description": "Filtrar operações com data a partir da inserida (Formato da data: 'AAAA-MM-DD')",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "description": "Filtrar operações com data até a inserida (Formato da data: 'AAAA-MM-DD')",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "exchange": {
+                        "type": "object",
+                        "properties": {
+                          "username": {
+                            "type": "string"
+                          },
+                          "from_currency": {
+                            "type": "string"
+                          },
+                          "to_currency": {
+                            "type": "string"
+                          },
+                          "original_amount": {
+                            "type": "number"
+                          },
+                          "converted_amount": {
+                            "type": "number"
+                          },
+                          "charged_fee": {
+                            "type": "number"
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        }
+                      },
+                      "totals": {
+                        "type": "object",
+                        "properties": {
+                          "charged_fee_total": {
+                            "type": "number"
+                          },
+                          "exchange_total_to_brl": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

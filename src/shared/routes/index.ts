@@ -1,12 +1,12 @@
 import { Router } from 'express';
 
-import { exchangeRouter } from './exchange.routes';
-import { currencyRouter } from './currency.routes'
+import { exchangesRouter } from './exchanges.routes';
+import { currenciesRouter } from './currencies.routes'
 
 const router = Router();
 
 //router.use('/report', reportRouter);
-router.use('/exchange', exchangeRouter);
-router.use('/currency', currencyRouter);
+router.use('/exchanges', exchangesRouter);
+router.use('/currencies', currenciesRouter);
 
 export { router };
